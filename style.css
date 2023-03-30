@@ -62,16 +62,16 @@ p, li {
 
 /* || header layout */
 
-nav, article, aside, footer {
-  background-color: white;
-  padding: 1%;
-}
-
 nav {
+  padding:4px 0;
+  position: fixed;
+  left:0;
+  right: 0;
   height: 50px;
   background-color: #80ff86;
-  display: flex;
+  display: fixed;
   margin-bottom: 10px;
+
 }
 
 nav ul {
@@ -103,26 +103,15 @@ main {
   display: flex;
 }
 
-article {
-  flex: 4;
-}
 
-aside {
-  flex: 1;
-  margin-left: 10px;
-  background-color: #ff80ff;
-}
-aside li {
-  padding-bottom: 10px;
-}
 
 .footer-basic {
-  padding:40px 0;
+  padding:4px 0;
   position: fixed;
   left:0;
   right: 0;
   bottom: 0;
-  background-color:#9b9595;
+  background-color:#bd3e3e;
   color:#4b4c4d;
 }
 
@@ -154,19 +143,6 @@ aside li {
   padding-bottom:25px;
 }
 
-.footer-basic .social > a {
-  font-size:24px;
-  width:40px;
-  height:40px;
-  line-height:40px;
-  display:inline-block;
-  text-align:center;
-  border-radius:50%;
-  border:1px solid #9e9c9c;
-  margin:0 8px;
-  color:inherit;
-  opacity:0.75;
-}
 
 .footer-basic .social > a:hover {
   opacity:0.9;
