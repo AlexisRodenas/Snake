@@ -1,27 +1,8 @@
-window.onload = function(){
 
 var canvas = document.getElementById("zone_de_jeu");
 const ctx = canvas.getContext("2d");
 var interval = 100;
 var gridsize = 10;
-var apple = ApplesetNewPosition();
-canvas.width = 500;
-canvas.height = 500;
-const centreX = canvas.width / 2;
-const centreY = canvas.height / 2;
-
-let position;
-let score;
-
-
-function drawSnake() {
-    ctx.fillStyle = "#ff0000";
-
-    for (var i = 0; i < snake.length; i++) {
-        ctx.fillRect(snake[i].x, snake[i].y, 10, 10);
-    }
-}
-
 var snake = [
     { x: 200, y: 200 },
     { x: 190, y: 200 },
@@ -33,6 +14,27 @@ var snake = [
 var dx = 10;
 var dy = 0;
 var gameStarted = false;
+var apple = ApplesetNewPosition();
+canvas.width = 500;
+canvas.height = 500;
+const centreX = canvas.width / 2;
+const centreY = canvas.height / 2;
+
+let position;
+let score;
+let tutoGameStarted = false;
+
+
+
+function drawSnake() {
+    ctx.fillStyle = "#ff0000";
+
+    for (var i = 0; i < snake.length; i++) {
+        ctx.fillRect(snake[i].x, snake[i].y, 10, 10);
+    }
+}
+
+
 
 function drawScore(){
     ctx.save();
@@ -43,22 +45,44 @@ function drawScore(){
     ctx.fillText(score.toString(), centreX, centreY);
     ctx.restore();
 }
-
+function tuto(){
+    ctx.font = "bold 70px sans-serif";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = "5";
+    ctx.strokeText("SNAKE", centreX, centreY - 180); 
+    ctx.fillText("SNAKE", centreX, centreY - 180);
+    ctx.font = "bold 20px sans-serif";
+    ctx.strokeText("Appuyer sur la touche espace pour jouer", centreX, centreY - 120);
+    ctx.fillText("Appuyer sur la touche espace pour jouer", centreX, centreY - 120);
+    ctx.strokeText("Déplacez-vous avec les fléche directionnel", centreX, centreY - 80);
+    ctx.fillText("Déplacez-vous avec les fléche directionnel", centreX, centreY - 80);
+    ctx.strokeText("Manger les pommes pour marqué des points", centreX, centreY - 40);
+    ctx.fillText("Manger les pommes pour marqué des points", centreX, centreY - 40);
+    ctx.strokeText("Vous perdez si vous rentrez  dans un mur ", centreX, centreY - 0);
+    ctx.fillText("Vous perdez si vous rentrez  dans un mur", centreX, centreY - 0);
+    ctx.strokeText(" ou dans vous", centreX, centreY - -40);
+    ctx.fillText(" ou dans vous", centreX, centreY - -40);
+}
 function startGame() {
-    snake = [
-        { x: 200, y: 200 },
-        { x: 190, y: 200 },
-        { x: 180, y: 200 },
-        { x: 170, y: 200 },
-        { x: 160, y: 200 },
-    ];
+        snake = [
+            { x: 200, y: 200 },
+            { x: 190, y: 200 },
+            { x: 180, y: 200 },
+            { x: 170, y: 200 },
+            { x: 160, y: 200 },
+        ];
+    
+        score = 0;
+        position = "droite";
+        dx = 10;
+        dy = 0;
+        gameStarted = true;
+        setTimeout(main, interval);
+    
 
-    score = 0;
-    position = "droite";
-    dx = 10;
-    dy = 0;
-    gameStarted = true;
-    setTimeout(main, interval);
 }
 
 function moveSnake() {
@@ -123,10 +147,16 @@ function checkCollision() {
 
 
 }
-
+document.addEventListener("DOMContentLoaded", () => {
+    if (!gameStarted && !tutoGameStarted) {
+        tuto() ;
+    }
+  });
 document.addEventListener("keydown", function (event) {
-    if (!gameStarted) {
+
+    if (!gameStarted || event.keyCode === 32) {
         startGame();
+        tutoGameStarted = true;
     } else {
         if (event.keyCode === 37 && position != "droite") {
             // gauche
@@ -178,9 +208,10 @@ function ApplesetNewPosition() {
 }
 
 function main() {
+
     // Effacer le canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Dessiner le score    
     drawScore()
 
@@ -202,6 +233,7 @@ function main() {
 
         setTimeout(main, interval);
     }
-}
+
 
 }
+
